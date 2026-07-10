@@ -1,31 +1,104 @@
+.users-page-container {
+    min-height: 100vh;
+    padding-bottom: 4rem;
+}
+
+.users-header {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.users-header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.users-filter-panel {
+    margin-bottom: 2rem;
+    padding: 2rem !important;
+}
+
+.users-filter-panel h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.users-filters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .users-filters-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+}
+
 .user-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .user-table th, .user-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  .user-table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .user-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .user-table tr:hover {
-    background-color: #ddd;
-  }
-  
-  .user-table td {
-    text-align: center;
-  }
-  
+}
+
+.user-table th, 
+.user-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.user-table th {
+    background-color: rgba(15, 23, 42, 0.4);
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+
+.user-table tr:last-child td {
+    border-bottom: none;
+}
+
+.user-table tr {
+    transition: background-color 0.2s ease;
+}
+
+.user-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-badge.active {
+    background-color: rgba(16, 185, 129, 0.12);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status-badge.inactive {
+    background-color: rgba(244, 63, 94, 0.12);
+    color: var(--error);
+    border: 1px solid rgba(244, 63, 94, 0.2);
+}

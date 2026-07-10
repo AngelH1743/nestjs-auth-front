@@ -10,13 +10,21 @@ import Navbar from "@/components/RegisterNavbar";
 import './page.css';
 import RegisterNavbar from "@/components/RegisterNavbar";
 
+const initialFormState = () => ({
+  name: "",
+  email: "",
+  password: "",
+  password_second: "",
+  cellphone: ""
+});
+
 const Registers = () => {
   const [message, setMessage] = React.useState("");
   const [openSnack, setOpenSnack] = React.useState(false);
-  const [registers, setRegisters] = React.useState([{ id: 0, formData: {} }]);
+  const [registers, setRegisters] = React.useState([{ id: Date.now(), formData: initialFormState() }]);
 
   const addRegister = () => {
-    setRegisters([...registers, { id: registers.length, formData: {} }]);
+    setRegisters([...registers, { id: Date.now() + Math.random(), formData: initialFormState() }]);
   };
 
   const deleteRegister = (id) => {
@@ -48,52 +56,83 @@ const Registers = () => {
       }
     }
 
-    for (const register of registers) {
+    for (let index = 0; index < registers.length; index++) {
+      const register = registers[index];
       const { name, email, password, password_second, cellphone } = register.formData;
       if (password !== password_second) {
-        setMessage(`Las contraseñas no coinciden para el registro ${register.id + 1}`);
+        setMessage(`Las contraseñas no coinciden para el registro ${index + 1}`);
         setOpenSnack(true);
         return;
       }
       const response = await AuthService.registerUser(name, email, password, password_second, cellphone);
       if (!response) {
-        setMessage(`Error al registrar usuario ${register.id + 1}`);
+        setMessage(`Error al registrar usuario ${index + 1}`);
         setOpenSnack(true);
         return;
       }
     }
-
-    // Guardar los datos en localStorage
-    const updatedUsers = [...existingUsers, ...registers.map(r => r.formData)];
-    localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
     
     setMessage("Todos los usuarios registrados exitosamente!");
     setOpenSnack(true);
   };
 
   return (
-    <Container className="flex-container">
+    <div className="register-page-container">
       <RegisterNavbar />
-      <SimpleSnackbar
-        message={message}
-        openSnack={openSnack}
-        closeSnack={() => { setOpenSnack(!openSnack); }}
-      />
-      {registers.map((register, index) => (
-        <div key={index} className="form">
-          <Register
-            id={register.id}
-            updateFormData={updateFormData}
-            formData={register.formData}
-          />
-          <Button onClick={() => deleteRegister(register.id)} variant="outlined" color="secondary">
-            Eliminar
-          </Button>
+      <Container maxWidth="lg">
+        <SimpleSnackbar
+          message={message}
+          openSnack={openSnack}
+          closeSnack={() => { setOpenSnack(!openSnack); }}
+        />
+        
+        <div className="register-header-section">
+          <h1>Registro de Múltiples Usuarios</h1>
+          <p>Llena los datos para registrar varios usuarios en lote.</p>
         </div>
-      ))}
-      <Button onClick={addRegister} variant="contained" color="primary">Añadir</Button>
-      <Button onClick={handleRegisterAll} variant="contained" color="success">Registrar Todos</Button>
-    </Container>
+
+        <div className="register-actions-bar">
+          <div style={{ color: 'var(--text-secondary)' }}>
+            Total a registrar: <strong>{registers.length}</strong>
+          </div>
+          <div className="register-actions-bar-buttons">
+            <Button onClick={addRegister} variant="outlined">
+              + Añadir Formulario
+            </Button>
+            <Button onClick={handleRegisterAll} variant="contained" color="success" style={{ background: 'linear-gradient(135deg, #10b981, #059669)', boxShadow: '0 4px 14px 0 rgba(16, 185, 129, 0.4)' }}>
+              Registrar Todos
+            </Button>
+          </div>
+        </div>
+
+        <div className="register-forms-grid">
+          {registers.map((register, index) => (
+            <div key={register.id} className="glass-card register-form-card">
+              <div className="register-form-card-header">
+                <h2>Usuario #{index + 1}</h2>
+                {registers.length > 1 && (
+                  <Button 
+                    onClick={() => deleteRegister(register.id)} 
+                    variant="text" 
+                    color="error"
+                    style={{ minWidth: 'auto', padding: '4px 8px', color: 'var(--error)' }}
+                  >
+                    Eliminar
+                  </Button>
+                )}
+              </div>
+              <div className="register-form-card-body">
+                <Register
+                  id={register.id}
+                  updateFormData={updateFormData}
+                  formData={register.formData}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </div>
   );
 };
 
