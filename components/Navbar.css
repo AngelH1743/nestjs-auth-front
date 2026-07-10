@@ -1,17 +1,51 @@
-@import '../app/globals.css';
-
 .navbar {
-    display: -webkit-flex;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     display: flex;
-    -webkit-flex-direction: row;
     flex-direction: row;
     justify-content: space-between;
-    background: var(--primary-100);
-    padding: 1rem;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.8rem 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    margin-bottom: 2rem;
 }
 
 .navbar-item {
     display: flex;
     align-items: center;
-    justify-content: center;
+}
+
+.navbar-user {
+    font-weight: 700;
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.1rem;
+}
+
+.navbar-actions {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 1rem;
+        text-align: center;
+    }
+    
+    .navbar-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }

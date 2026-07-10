@@ -26,19 +26,18 @@ const RegisterNavbar = () => {
     return (
         <div className="navbar">
             <div className="navbar-item">
-                {user?.name ? `Hola, ${user.name}` : ''}
+                {user?.name ? <span className="navbar-user">Hola, {user.name}</span> : ''}
             </div>
-            <div className="navbar-item">
-                <Button onClick={() => router.push('/register')}>
-                    Inicio
-                </Button>
-                <Button onClick={() => router.push('/users')}>
+            <div className="navbar-actions">
+                <Button variant="text" onClick={() => router.push('/users')}>
                     Lista de Usuarios
                 </Button>
-                <Button onClick={handleLogout}>
+                <Button variant="outlined" onClick={() => router.push('/register')}>
+                    Crear Usuarios
+                </Button>
+                <Button variant="contained" color="error" style={{ background: '#f43f5e', boxShadow: '0 4px 14px 0 rgba(244, 63, 94, 0.4)' }} onClick={handleLogout}>
                     Cerrar Sesión
                 </Button>
-                
             </div>
         </div>
     );

@@ -105,75 +105,101 @@ const Users = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <div className="users-page-container">
       <Navbar />
-      <h1>Lista de Usuarios</h1>
-      <FormControl fullWidth style={{ marginBottom: '20px' }}>
-        <InputLabel id="statusFilterLabel">Filtrar por estado</InputLabel>
-        <Select
-          labelId="statusFilterLabel"
-          id="statusFilter"
-          value={status || ''}
-          onChange={handleStatusChange}
-        >
-          <MenuItem value="">Todos</MenuItem>
-          <MenuItem value="true">Activo</MenuItem>
-          <MenuItem value="false">Inactivo</MenuItem>
-        </Select>
-      </FormControl>
-      <TextField
-        fullWidth
-        label="Filtrar por nombre"
-        variant="outlined"
-        value={name || ''}
-        onChange={handleNameChange}
-        style={{ marginBottom: '20px' }}
-      />
-      <TextField
-        fullWidth
-        label="Filtrar por fecha de inicio de sesión después de"
-        variant="outlined"
-        type="date"
-        value={logAfter || ''}
-        onChange={handleLogAfterChange}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        style={{ marginBottom: '20px' }}
-      />
-      <TextField
-        fullWidth
-        label="Filtrar por fecha de inicio de sesión antes de"
-        variant="outlined"
-        type="date"
-        value={logBefore || ''}
-        onChange={handleLogBeforeChange}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        style={{ marginBottom: '20px' }}
-      />
-      <table className="user-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredUsers.map(user => (
-            <tr key={user.id}>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.cellphone}</td>
-              <td>{user.status ? 'Activo' : 'Inactivo'}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </Container>
+      <Container maxWidth="md">
+        <div className="users-header">
+          <h1>Lista de Usuarios</h1>
+        </div>
+
+        <div className="glass-card users-filter-panel">
+          <h2>Filtros de Búsqueda</h2>
+          <div className="users-filters-grid">
+            <TextField
+              fullWidth
+              label="Filtrar por nombre"
+              variant="outlined"
+              value={name || ''}
+              onChange={handleNameChange}
+            />
+
+            <FormControl fullWidth>
+              <InputLabel id="statusFilterLabel">Filtrar por estado</InputLabel>
+              <Select
+                labelId="statusFilterLabel"
+                id="statusFilter"
+                value={status || ''}
+                label="Filtrar por estado"
+                onChange={handleStatusChange}
+              >
+                <MenuItem value="">Todos</MenuItem>
+                <MenuItem value="true">Activo</MenuItem>
+                <MenuItem value="false">Inactivo</MenuItem>
+              </Select>
+            </FormControl>
+
+            <TextField
+              fullWidth
+              label="Última sesión después de"
+              variant="outlined"
+              type="date"
+              value={logAfter || ''}
+              onChange={handleLogAfterChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+
+            <TextField
+              fullWidth
+              label="Última sesión antes de"
+              variant="outlined"
+              type="date"
+              value={logBefore || ''}
+              onChange={handleLogBeforeChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="table-wrapper">
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUsers.length === 0 ? (
+                <tr>
+                  <td colSpan="4" style={{ textAlign: 'center', color: 'var(--text-secondary)', padding: '2rem' }}>
+                    No se encontraron usuarios con los filtros aplicados.
+                  </td>
+                </tr>
+              ) : (
+                filteredUsers.map(user => (
+                  <tr key={user.id}>
+                    <td style={{ fontWeight: 600 }}>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.cellphone}</td>
+                    <td>
+                      <span className={`status-badge ${user.status ? 'active' : 'inactive'}`}>
+                        {user.status ? 'Activo' : 'Inactivo'}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Container>
+    </div>
   );
 };
 

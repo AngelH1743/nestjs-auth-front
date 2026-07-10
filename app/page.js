@@ -108,11 +108,39 @@ export default function Home() {
   }, [router]);
 
   return (
-    <Container maxWidth="sm">
-      <div className={"navigator"}>
-        <Button id="iniciar-sesion" onClick={() => router.push('/login')}>Iniciar Sesión</Button>
-        
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '100vh',
+      padding: '2rem',
+      textAlign: 'center'
+    }}>
+      <div className="glass-card" style={{ maxWidth: '480px', width: '100%', padding: '4rem 3rem' }}>
+        <h1 style={{
+          fontSize: '2.5rem',
+          fontWeight: 800,
+          marginBottom: '1rem',
+          background: 'linear-gradient(135deg, #a855f7, #6366f1)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          Portal de Usuarios
+        </h1>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '2.5rem', fontSize: '1.1rem' }}>
+          Administración de cuentas de usuarios, listado de actividad y registros por lotes.
+        </p>
+        <Button 
+          id="iniciar-sesion" 
+          variant="contained" 
+          fullWidth
+          onClick={() => router.push('/login')}
+          style={{ padding: '12px 24px', fontSize: '1.05rem' }}
+        >
+          Acceder al Sistema
+        </Button>
       </div>
-    </Container>
+    </div>
   );
 }

@@ -40,7 +40,7 @@ const Edit = (props) => {
             setUser(data);
             setEditedUser(data);
         })();
-    }, []);
+    }, [id]);
 
     return (
         <div>
